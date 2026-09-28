@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Campus Community</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Redirect to login if not logged in -->
+  <script>
+    if (!localStorage.getItem('campus_role')) {
+      window.location.replace('login.html');
+    }
+  </script>
 </head>
 <body>
 
