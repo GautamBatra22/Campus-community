@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main Menu</div>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+        <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+        <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+        <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+        <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+        <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+      </ul>
+
+      <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+      <ul class="nav-links">
+        <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+        <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+        <li><a href="labels.html"><span class="nav-icon">🏷️</span><span class="nav-label">My Labels</span></a></li>
+      </ul>
+
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">◀ <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="account-page">
+
+    <!-- Profile Hero -->
+    <div class="account-hero">
+      <div class="account-avatar-lg" id="avatarDisplay">S</div>
+      <div class="account-hero-info">
+        <h2 id="displayName">Student Name</h2>
+        <p id="displayEmail">student@college.edu</p>
+        <span class="role-badge">🎓 Student</span>
+      </div>
+    </div>
+
+    <!-- Status message -->
+    <div id="statusMsg" style="display:none;padding:12px 18px;border-radius:8px;font-size:14px;margin-bottom:20px;font-weight:500;"></div>
+
+    <!-- Profile Information -->
+    <div class="account-section">
+      <div class="account-section-title">👤 Profile Information</div>
+
+      <div class="account-field-row">
+        <div class="account-field">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="Enter first name" value="Student">
+        </div>
+        <div class="account-field">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="Enter last name" value="">
+        </div>
+      </div>
+
+      <div class="account-field">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="your@email.com" value="student@college.edu">
+      </div>
+
+      <div class="account-field">
+        <label>Roll Number / Student ID</label>
+        <input type="text" id="rollNo" placeholder="e.g. CS2024001" value="">
+      </div>
+
+      <div class="account-field">
+        <label>Department</label>
+        <input type="text" id="department" placeholder="e.g. Computer Science" value="">
+      </div>
+
+      <div class="account-field">
+        <label>Year</label>
+        <select id="year" style="width:100%;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:'Poppins',sans-serif;outline:none;appearance:none;cursor:pointer;">
+          <option value="">Select year</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+        </select>
+      </div>
+
+      <div class="account-field">
+        <label>Bio (optional)</label>
+        <textarea id="bio" placeholder="Tell your campus community about yourself..." rows="3"
+          style="width:100%;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;font-family:'Poppins',sans-serif;outline:none;resize:vertical;transition:border-color 0.25s;"
+          onfocus="this.style.borderColor='var(--border-cyan)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <button class="btn-primary account-save-btn" onclick="saveProfile()">Save Profile</button>
+    </div>
+
+    <!-- Change Password -->
+    <div class="account-section">
+      <div class="account-section-title">🔐 Change Password</div>
+
+      <div class="account-field">
+        <label>Current Password</label>
+        <input type="password" id="currentPwd" placeholder="Enter current password">
+      </div>
+      <div class="account-field-row">
+        <div class="account-field">
+          <label>New Password</label>
+          <input type="password" id="newPwd" placeholder="At least 8 characters">
+        </div>
+        <div class="account-field">
+          <label>Confirm New Password</label>
+          <input type="password" id="confirmPwd" placeholder="Repeat new password">
+        </div>
+      </div>
+
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">
+        Use at least 8 characters with a mix of letters and numbers.
+      </p>
+
+      <button class="btn-secondary" onclick="changePassword()" style="padding:11px 24px;">Update Password</button>
+    </div>
+
+    <!-- Notifications & Preferences -->
+    <div class="account-section">
+      <div class="account-section-title">🔔 Notifications & Preferences</div>
+
+      <div class="toggle-field">
+        <div class="toggle-field-info">
+          <h4>Announcement Alerts</h4>
+          <p>Get notified when new announcements are posted</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="prefAnnounce" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-field">
+        <div class="toggle-field-info">
+          <h4>Event Reminders</h4>
+          <p>Receive reminders 1 day before an event you've saved</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="prefEvents" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-field">
+        <div class="toggle-field-info">
+          <h4>Discussion Replies</h4>
+          <p>Get notified when someone replies to your thread</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="prefDiscussion">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-field">
+        <div class="toggle-field-info">
+          <h4>Club Updates</h4>
+          <p>Receive news from clubs you've joined</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="prefClubs" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <button class="btn-primary account-save-btn" onclick="savePreferences()">Save Preferences</button>
+    </div>
+
+    <!-- My Labels Quick Stats -->
+    <div class="account-section">
+      <div class="account-section-title">🏷️ My Labels</div>
+      <div id="labelsStats" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;"></div>
+      <a href="labels.html" class="btn-secondary" style="padding:10px 20px;display:inline-flex;">Manage Labels →</a>
+    </div>
+
+    <!-- Logout -->
+    <div class="account-section">
+      <div class="account-section-title">🚪 Session</div>
+      <div class="danger-item">
+        <div class="danger-item-info">
+          <h4>Log Out</h4>
+          <p>Sign out of your Campus Community account on this device.</p>
+        </div>
+        <button class="btn-secondary" onclick="logoutUser()" style="padding:10px 20px;">Log Out</button>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="account-section danger-section">
+      <div class="account-section-title">⚠️ Danger Zone</div>
+
+      <div class="danger-item">
+        <div class="danger-item-info">
+          <h4>Clear All Labels</h4>
+          <p>Delete all your personal labels and saved items. This cannot be undone.</p>
+        </div>
+        <button class="btn-danger" onclick="clearAllLabels()">Clear Labels</button>
+      </div>
+
+      <div class="danger-item">
+        <div class="danger-item-info">
+          <h4>Delete Account</h4>
+          <p>Permanently delete your account and all your data. This action is irreversible.</p>
+        </div>
+        <button class="btn-danger" onclick="deleteAccount()">Delete Account</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const PREF_KEY = 'campus_prefs';
+    const PROFILE_KEY = 'campus_profile';
+
+    /* ---- Load saved data on page open ---- */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadProfile();
+      loadPreferences();
+      renderLabelsStats();
+    });
+
+    function loadProfile() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}');
+        if (saved.firstName) document.getElementById('firstName').value = saved.firstName;
+        if (saved.lastName)  document.getElementById('lastName').value  = saved.lastName;
+        if (saved.email)     document.getElementById('email').value     = saved.email;
+        if (saved.rollNo)    document.getElementById('rollNo').value    = saved.rollNo;
+        if (saved.department)document.getElementById('department').value= saved.department;
+        if (saved.year)      document.getElementById('year').value      = saved.year;
+        if (saved.bio)       document.getElementById('bio').value       = saved.bio;
+        updateAvatarDisplay();
+      } catch(e) {}
+    }
+
+    function updateAvatarDisplay() {
+      const first = document.getElementById('firstName').value.trim();
+      const last  = document.getElementById('lastName').value.trim();
+      const letter = (first[0] || 'S').toUpperCase();
+      document.getElementById('avatarDisplay').textContent = letter;
+      document.getElementById('displayName').textContent   = [first, last].filter(Boolean).join(' ') || 'Student';
+      document.getElementById('displayEmail').textContent  = document.getElementById('email').value || 'student@college.edu';
+    }
+
+    function saveProfile() {
+      const profile = {
+        firstName:  document.getElementById('firstName').value.trim(),
+        lastName:   document.getElementById('lastName').value.trim(),
+        email:      document.getElementById('email').value.trim(),
+        rollNo:     document.getElementById('rollNo').value.trim(),
+        department: document.getElementById('department').value.trim(),
+        year:       document.getElementById('year').value,
+        bio:        document.getElementById('bio').value.trim(),
+      };
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+      updateAvatarDisplay();
+
+      // Also call API when backend is ready
+      // API.updateProfile(profile).catch(() => {});
+
+      showStatus('Profile saved successfully! ✅', 'success');
+    }
+
+    function changePassword() {
+      const cur  = document.getElementById('currentPwd').value;
+      const nw   = document.getElementById('newPwd').value;
+      const conf = document.getElementById('confirmPwd').value;
+
+      if (!cur || !nw || !conf) { showStatus('Please fill in all password fields.', 'error'); return; }
+      if (nw.length < 8)        { showStatus('New password must be at least 8 characters.', 'error'); return; }
+      if (nw !== conf)          { showStatus('New passwords do not match.', 'error'); return; }
+
+      // API.changePassword({ currentPassword: cur, newPassword: nw }).catch(() => {});
+      document.getElementById('currentPwd').value = '';
+      document.getElementById('newPwd').value     = '';
+      document.getElementById('confirmPwd').value = '';
+      showStatus('Password updated successfully! ✅', 'success');
+    }
+
+    function loadPreferences() {
+      try {
+        const prefs = JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
+        if ('announce'  in prefs) document.getElementById('prefAnnounce').checked  = prefs.announce;
+        if ('events'    in prefs) document.getElementById('prefEvents').checked    = prefs.events;
+        if ('discussion'in prefs) document.getElementById('prefDiscussion').checked = prefs.discussion;
+        if ('clubs'     in prefs) document.getElementById('prefClubs').checked     = prefs.clubs;
+      } catch(e) {}
+    }
+
+    function savePreferences() {
+      const prefs = {
+        announce:   document.getElementById('prefAnnounce').checked,
+        events:     document.getElementById('prefEvents').checked,
+        discussion: document.getElementById('prefDiscussion').checked,
+        clubs:      document.getElementById('prefClubs').checked,
+      };
+      localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+      showStatus('Preferences saved! ✅', 'success');
+    }
+
+    function renderLabelsStats() {
+      const labels = LabelsManager.getAll();
+      const container = document.getElementById('labelsStats');
+      if (labels.length === 0) {
+        container.innerHTML = '<p style="font-size:14px;color:var(--text-muted);">No labels created yet.</p>';
+        return;
+      }
+      container.innerHTML = labels.map(l => `
+        <a href="labels.html?id=${l.id}" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-card-hover);border:1px solid var(--border);border-radius:20px;text-decoration:none;font-size:13px;color:var(--text-secondary);transition:all 0.2s;"
+          onmouseover="this.style.borderColor='var(--border-cyan)';this.style.color='var(--text-primary)'"
+          onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+          <span style="width:9px;height:9px;border-radius:50%;background:${l.color};display:inline-block;"></span>
+          ${l.name}
+          <span style="color:var(--text-muted);font-size:11px;">${l.items.length}</span>
+        </a>`).join('');
+    }
+
+    function logoutUser() {
+      if (!confirm('Are you sure you want to log out?')) return;
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      window.location.href = 'login.html';
+    }
+
+    function clearAllLabels() {
+      if (!confirm('Delete ALL your labels? This cannot be undone.')) return;
+      localStorage.removeItem('campus_labels');
+      renderLabelsStats();
+      showStatus('All labels cleared.', 'info');
+    }
+
+    function deleteAccount() {
+      const confirmed = confirm('Are you SURE you want to permanently delete your account? All your data will be lost. This cannot be undone.');
+      if (!confirmed) return;
+      const doubleCheck = prompt('Type DELETE to confirm:');
+      if (doubleCheck !== 'DELETE') { showStatus('Account deletion cancelled.', 'info'); return; }
+
+      // API.deleteUser(userId).catch(() => {});
+      localStorage.clear();
+      window.location.href = 'index.html';
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('statusMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.style.background = type === 'success' ? 'rgba(34,197,94,0.12)' :
+                            type === 'error'   ? 'rgba(239,68,68,0.12)' :
+                                                 'rgba(0,212,255,0.1)';
+      el.style.color = type === 'success' ? 'var(--green)' :
+                       type === 'error'   ? '#ef4444' :
+                                            'var(--cyan)';
+      el.style.border = `1px solid ${type === 'success' ? 'rgba(34,197,94,0.3)' : type === 'error' ? 'rgba(239,68,68,0.3)' : 'var(--border-cyan)'}`;
+      setTimeout(() => el.style.display = 'none', 4000);
+    }
+  </script>
+
+</body>
+</html>

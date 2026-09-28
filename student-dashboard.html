@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <span>Campus</span>
+        <span>Community</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Logout</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">My Dashboard</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="dashboard-section">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h1>👋 Welcome back, Student!</h1>
+        <p>Here's everything happening on your campus today — 27 September 2026</p>
+      </div>
+      <div class="welcome-avatar">🎓</div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="section-header">
+      <h2 class="section-title">Quick Access</h2>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 40px;">
+
+      <div class="dashboard-card">
+        <div class="card-icon">📢</div>
+        <h2>Announcements</h2>
+        <p>View the latest announcements from campus clubs, administration, and events. Stay in the loop.</p>
+        <a href="announcement.html" class="card-link">View Announcements →</a>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon">👥</div>
+        <h2>Campus Clubs</h2>
+        <p>Explore all active clubs on campus and find the right one for you. Join today!</p>
+        <a href="clubs.html" class="card-link">Browse Clubs →</a>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon">📅</div>
+        <h2>Upcoming Events</h2>
+        <p>Check the events calendar for upcoming workshops, competitions and campus activities.</p>
+        <a href="events.html" class="card-link">View Events →</a>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-icon">📌</div>
+        <h2>My Reminders</h2>
+        <p>Set personal reminders for assignment deadlines, club meetings and important events.</p>
+        <a href="#" class="card-link">Manage Reminders →</a>
+      </div>
+
+    </div>
+
+    <!-- Recent Announcements Preview -->
+    <div class="section-header">
+      <h2 class="section-title">Recent Announcements</h2>
+      <a href="announcement.html" class="section-link">View All →</a>
+    </div>
+
+    <div class="grid-3">
+
+      <div class="announcement-card">
+        <span class="tag tag-tech">Technical</span>
+        <h3>Tech Club Recruitment 2026</h3>
+        <p class="card-meta">📅 25 Sep 2026</p>
+        <p>Applications open for new members. Join the Tech Club!</p>
+        <a href="announcement.html" class="card-link">Read More →</a>
+      </div>
+
+      <div class="announcement-card">
+        <span class="tag tag-culture">Cultural</span>
+        <h3>Freshers Welcome Event</h3>
+        <p class="card-meta">📅 28 Sep 2026</p>
+        <p>Grand welcome event with performances, games and food.</p>
+        <a href="announcement.html" class="card-link">Read More →</a>
+      </div>
+
+      <div class="announcement-card">
+        <span class="tag tag-general">General</span>
+        <h3>Library Extended Hours</h3>
+        <p class="card-meta">📅 3 Oct 2026</p>
+        <p>Library open till 11 PM during exam season (Oct 10–30).</p>
+        <a href="announcement.html" class="card-link">Read More →</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

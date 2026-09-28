@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Announcements | Campus Community Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .ann-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .ann-row:hover { background: var(--bg-card-hover); }
+    .ann-row-left { display: flex; flex-direction: column; gap: 4px; }
+    .ann-row-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+    .ann-row-meta { font-size: 12px; color: var(--text-muted); }
+    .ann-row-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .btn-delete {
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #ef4444;
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-delete:hover { background: rgba(239,68,68,0.22); }
+    .btn-edit-sm {
+      padding: 6px 14px !important;
+      font-size: 12px !important;
+    }
+    #postStatus {
+      margin-top: 12px;
+      font-size: 13px;
+      border-radius: 6px;
+      padding: 0;
+      min-height: 0;
+    }
+    #postStatus.show {
+      padding: 10px 14px;
+    }
+    #postStatus.success { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    #postStatus.error   { background: rgba(239,68,68,0.12);  color: #ef4444;  border: 1px solid rgba(239,68,68,0.3); }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
+    @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+    textarea.form-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: 6px;
+      padding: 12px;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      resize: vertical;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea.form-input:focus { border-color: var(--border-cyan); }
+    select.form-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: 6px;
+      padding: 12px;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    select.form-input:focus { border-color: var(--border-cyan); }
+    .section-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Admin</div>
+    <ul class="nav-links">
+      <li class="active"><a href="admin-announcements.html"><span class="nav-icon">📢</span><span class="nav-label">Manage Announcements</span></a></li>
+      <li><a href="admin-events.html"><span class="nav-icon">📅</span><span class="nav-label">Manage Events</span></a></li>
+      <li><a href="admin-clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Manage Clubs</span></a></li>
+      <li><a href="admin-users.html"><span class="nav-icon">👤</span><span class="nav-label">Manage Users</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Logout</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Dashboard</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="neon-title">Admin Panel</h1>
+    </div>
+
+    <div class="welcome-banner">
+      <div>
+        <h2 style="margin:0 0 4px;font-size:22px;font-weight:700;">📢 Manage Announcements</h2>
+        <p style="margin:0;color:var(--text-secondary);font-size:14px;">Post new announcements and manage existing ones.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-section admin-grid">
+
+      <!-- LEFT: Post Form -->
+      <div class="dashboard-card" style="padding:28px;">
+        <div class="section-heading">📝 Post New Announcement</div>
+        <form id="announcementForm" novalidate>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="annTitle" placeholder="Announcement title" required />
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="annCategory" class="form-input">
+              <option value="Technical">Technical</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Sports">Sports</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Content</label>
+            <textarea id="annContent" class="form-input" rows="5" placeholder="Write your announcement here..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;margin-top:4px;">Post Announcement</button>
+          <div id="postStatus"></div>
+        </form>
+      </div>
+
+      <!-- RIGHT: Existing Announcements -->
+      <div class="dashboard-card" style="padding:28px;">
+        <div class="section-heading">📋 Existing Announcements</div>
+        <div id="announcementList">
+
+          <div class="ann-row" data-id="1">
+            <div class="ann-row-left">
+              <div style="margin-bottom:6px;"><span class="tag tag-tech">Technical</span></div>
+              <div class="ann-row-title">Tech Club Recruitment</div>
+              <div class="ann-row-meta">Sep 25, 2026 &nbsp;·&nbsp; Admin</div>
+            </div>
+            <div class="ann-row-actions">
+              <button class="btn-secondary btn-edit-sm">Edit</button>
+              <button class="btn-delete" onclick="deleteAnnouncement(this, 1)">Delete</button>
+            </div>
+          </div>
+
+          <div class="ann-row" data-id="2">
+            <div class="ann-row-left">
+              <div style="margin-bottom:6px;"><span class="tag tag-culture">Cultural</span></div>
+              <div class="ann-row-title">Freshers Event</div>
+              <div class="ann-row-meta">Sep 28, 2026 &nbsp;·&nbsp; Admin</div>
+            </div>
+            <div class="ann-row-actions">
+              <button class="btn-secondary btn-edit-sm">Edit</button>
+              <button class="btn-delete" onclick="deleteAnnouncement(this, 2)">Delete</button>
+            </div>
+          </div>
+
+          <div class="ann-row" data-id="3">
+            <div class="ann-row-left">
+              <div style="margin-bottom:6px;"><span class="tag tag-tech">Technical</span></div>
+              <div class="ann-row-title">Hackathon</div>
+              <div class="ann-row-meta">Sep 30, 2026 &nbsp;·&nbsp; Admin</div>
+            </div>
+            <div class="ann-row-actions">
+              <button class="btn-secondary btn-edit-sm">Edit</button>
+              <button class="btn-delete" onclick="deleteAnnouncement(this, 3)">Delete</button>
+            </div>
+          </div>
+
+          <div class="ann-row" data-id="4">
+            <div class="ann-row-left">
+              <div style="margin-bottom:6px;"><span class="tag tag-general">General</span></div>
+              <div class="ann-row-title">Library Hours Update</div>
+              <div class="ann-row-meta">Oct 3, 2026 &nbsp;·&nbsp; Admin</div>
+            </div>
+            <div class="ann-row-actions">
+              <button class="btn-secondary btn-edit-sm">Edit</button>
+              <button class="btn-delete" onclick="deleteAnnouncement(this, 4)">Delete</button>
+            </div>
+          </div>
+
+          <div class="ann-row" data-id="5">
+            <div class="ann-row-left">
+              <div style="margin-bottom:6px;"><span class="tag tag-culture">Cultural</span></div>
+              <div class="ann-row-title">Cultural Fest Volunteers</div>
+              <div class="ann-row-meta">Oct 10, 2026 &nbsp;·&nbsp; Admin</div>
+            </div>
+            <div class="ann-row-actions">
+              <button class="btn-secondary btn-edit-sm">Edit</button>
+              <button class="btn-delete" onclick="deleteAnnouncement(this, 5)">Delete</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <footer><p>&copy; 2026 <span style="color:var(--cyan)">Campus Community</span>. All rights reserved.</p></footer>
+  </main>
+</div>
+
+<script src="main.js"></script>
+  <script src="auth.js"></script>
+<script>
+  const API_BASE = 'http://localhost:3000/api';
+  const API = {
+    async request(url, options={}) {
+      const token = localStorage.getItem('token');
+      const res = await fetch(API_BASE + url, {
+        headers: { 'Content-Type': 'application/json', ...(token ? {'Authorization':'Bearer '+token} : {}), ...options.headers },
+        ...options
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    },
+    createAnnouncement: (d) => API.request('/announcements', {method:'POST', body:JSON.stringify(d)}),
+    deleteAnnouncement: (id) => API.request('/announcements/'+id, {method:'DELETE'}),
+    createEvent: (d) => API.request('/events', {method:'POST', body:JSON.stringify(d)}),
+    deleteEvent: (id) => API.request('/events/'+id, {method:'DELETE'}),
+    createClub: (d) => API.request('/clubs', {method:'POST', body:JSON.stringify(d)}),
+    deleteClub: (id) => API.request('/clubs/'+id, {method:'DELETE'}),
+    getUsers: () => API.request('/users'),
+    updateUserRole: (id, role) => API.request('/users/'+id+'/role', {method:'PATCH', body:JSON.stringify({role})}),
+    deleteUser: (id) => API.request('/users/'+id, {method:'DELETE'}),
+  };
+
+  const statusEl = document.getElementById('postStatus');
+
+  function showStatus(msg, type) {
+    statusEl.textContent = msg;
+    statusEl.className = 'show ' + type;
+    if (type === 'success') {
+      setTimeout(() => { statusEl.className = ''; statusEl.textContent = ''; }, 4000);
+    }
+  }
+
+  document.getElementById('announcementForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const title    = document.getElementById('annTitle').value.trim();
+    const category = document.getElementById('annCategory').value;
+    const content  = document.getElementById('annContent').value.trim();
+
+    if (!title || !content) {
+      showStatus('⚠️ Please fill in all required fields.', 'error');
+      return;
+    }
+
+    try {
+      await API.createAnnouncement({ title, category, content });
+      showStatus('✅ Announcement posted successfully!', 'success');
+      this.reset();
+    } catch (err) {
+      showStatus('⚠️ Could not connect to server. Will retry when backend is live.', 'error');
+    }
+  });
+
+  function deleteAnnouncement(btn, id) {
+    if (!confirm('Are you sure you want to delete this announcement?')) return;
+    const row = btn.closest('.ann-row');
+    row.style.opacity = '0';
+    row.style.transform = 'translateX(30px)';
+    setTimeout(() => row.remove(), 350);
+    API.deleteAnnouncement(id).catch(() => {/* backend not live yet */});
+  }
+</script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <span>Campus</span>
+        <span>Community</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <h1 class="neon-title">📢 Announcements</h1>
+      <p>Stay updated with the latest news and notices from your campus.</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filter('all', this)">All</button>
+      <button class="filter-btn" onclick="filter('tech', this)">💻 Technical</button>
+      <button class="filter-btn" onclick="filter('culture', this)">🎭 Cultural</button>
+      <button class="filter-btn" onclick="filter('sports', this)">⚽ Sports</button>
+      <button class="filter-btn" onclick="filter('general', this)">📌 General</button>
+    </div>
+
+    <!-- Announcements List -->
+    <div id="announcementsList">
+
+      <div class="announcement-list-card" data-tag="tech">
+        <div class="alc-body">
+          <span class="tag tag-tech">Technical</span>
+          <h3>Tech Club Recruitment 2026</h3>
+          <div class="meta">📅 25 September 2026 &nbsp;|&nbsp; 👤 Technical Club</div>
+          <p>The Technical Club is inviting students to join and participate in upcoming coding events, hackathons, and projects. Apply before the deadline!</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="culture">
+        <div class="alc-body">
+          <span class="tag tag-culture">Cultural</span>
+          <h3>Freshers Welcome Event 2026</h3>
+          <div class="meta">📅 28 September 2026 &nbsp;|&nbsp; 👤 Cultural Club</div>
+          <p>Welcome to campus! Join us for an exciting freshers event filled with performances, games and a chance to meet everyone on campus.</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="tech">
+        <div class="alc-body">
+          <span class="tag tag-tech">Technical</span>
+          <h3>Campus Hackathon — Register Now!</h3>
+          <div class="meta">📅 30 September 2026 &nbsp;|&nbsp; 👤 Technical Club</div>
+          <p>A 24-hour hackathon open to all students. Form your team, pick a problem statement, and build something amazing. Prizes worth ₹50,000!</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="sports">
+        <div class="alc-body">
+          <span class="tag tag-sports">Sports</span>
+          <h3>Inter-College Cricket Tournament</h3>
+          <div class="meta">📅 5 October 2026 &nbsp;|&nbsp; 👤 Sports Club</div>
+          <p>Our campus is hosting an inter-college cricket tournament. Teams of 11 can register before 1st October. Let's bring the trophy home!</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="general">
+        <div class="alc-body">
+          <span class="tag tag-general">General</span>
+          <h3>Library Extended Hours — Exam Season</h3>
+          <div class="meta">📅 3 October 2026 &nbsp;|&nbsp; 👤 Administration</div>
+          <p>The campus library will be open until 11 PM during the exam season (Oct 10 – Oct 30). Plan your study sessions accordingly.</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="culture">
+        <div class="alc-body">
+          <span class="tag tag-culture">Cultural</span>
+          <h3>Annual Cultural Fest — Volunteers Needed</h3>
+          <div class="meta">📅 10 October 2026 &nbsp;|&nbsp; 👤 Cultural Club</div>
+          <p>The Annual Cultural Fest is around the corner! We need enthusiastic volunteers to help organize performances and logistics. Sign up today.</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+      <div class="announcement-list-card" data-tag="general">
+        <div class="alc-body">
+          <span class="tag tag-general">General</span>
+          <h3>Scholarship Applications Open</h3>
+          <div class="meta">📅 1 October 2026 &nbsp;|&nbsp; 👤 Administration</div>
+          <p>Merit and need-based scholarship applications are now open for the 2026-27 academic year. Submit your application before 15th October.</p>
+        </div>
+        <div class="alc-action"><a href="#">Read More →</a></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    function filter(tag, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.announcement-list-card').forEach(card => {
+        card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'flex' : 'none';
+      });
+    }
+  </script>
+
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

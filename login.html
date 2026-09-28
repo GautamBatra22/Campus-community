@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="margin-left:0;">
+
+  <div class="login-page">
+    <div class="login-box">
+
+      <!-- Logo -->
+      <div class="login-logo">
+        <div class="logo-icon">🎓</div>
+        <h1>Campus Community</h1>
+        <p>Sign in to your account</p>
+      </div>
+
+      <!-- Role Tabs -->
+      <div class="role-tabs">
+        <button class="role-tab active" id="tabStudent" onclick="selectRole('student')">🎓 Student</button>
+        <button class="role-tab"        id="tabAdmin"   onclick="selectRole('admin')">⚙️ Admin</button>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" onsubmit="handleLogin(event)">
+
+        <div class="form-group">
+          <label for="nameInput">Your Name</label>
+          <input type="text" id="nameInput" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Email / Username</label>
+          <input type="text" id="username" placeholder="Enter your email or username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">Login as Student</button>
+
+      </form>
+
+      <p class="login-error" id="loginError"></p>
+
+      <!-- Demo notice -->
+      <div style="margin-top:18px;padding:12px 14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-radius:8px;font-size:12px;color:var(--text-secondary);line-height:1.6;">
+        <strong style="color:var(--cyan);">Demo Mode</strong> — Backend not connected yet.<br>
+        Any name/email/password works. Role tabs switch Student ↔ Admin.
+      </div>
+
+      <div class="login-footer" style="margin-top:16px;">
+        <a href="index.html">← Back to Home</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    let selectedRole = 'student';
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById('tabStudent').classList.toggle('active', role === 'student');
+      document.getElementById('tabAdmin').classList.toggle('active',   role === 'admin');
+      document.getElementById('loginBtn').textContent = role === 'admin' ? 'Login as Admin' : 'Login as Student';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const name = document.getElementById('nameInput').value.trim();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const err  = document.getElementById('loginError');
+
+      if (!name || !user || !pass) {
+        err.textContent = '⚠️ Please fill in all fields.';
+        return;
+      }
+      err.textContent = '';
+
+      // Save role to localStorage — auth.js will read this on every page
+      localStorage.setItem('campus_role', selectedRole);
+      localStorage.setItem('campus_name', name);
+
+      // Redirect based on role
+      window.location.href = selectedRole === 'admin'
+        ? 'admin-dashboard.html'
+        : 'student-dashboard.html';
+    }
+
+    // If already logged in, redirect
+    const existingRole = localStorage.getItem('campus_role');
+    if (existingRole) {
+      window.location.href = existingRole === 'admin' ? 'admin-dashboard.html' : 'student-dashboard.html';
+    }
+  </script>
+
+</body>
+</html>

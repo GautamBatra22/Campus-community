@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discussion Forum — Campus Community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .thread-reply-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+      padding-top: 28px;
+      flex-shrink: 0;
+    }
+
+    .new-thread-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 20px;
+    }
+
+    .new-thread-form h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .new-thread-form select,
+    .new-thread-form input,
+    .new-thread-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .new-thread-form select:focus,
+    .new-thread-form input:focus,
+    .new-thread-form textarea:focus {
+      border-color: var(--border-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .new-thread-form select option {
+      background: var(--bg-card);
+    }
+
+    .new-thread-form textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .category-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .thread-count-badge {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .start-btn-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 32px;
+      margin-bottom: 4px;
+    }
+
+    .start-btn-row p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html" class="active"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="page-wrapper">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="neon-title">💬 Discussion Forum</h1>
+        <p>Join the conversation — ask questions, share ideas, and connect with fellow students.</p>
+      </div>
+
+      <!-- Category Cards -->
+      <div class="section-header">
+        <h2 class="section-title">Browse Categories</h2>
+      </div>
+
+      <div class="grid-3" id="categoryGrid" style="margin-bottom: 40px;">
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">💭</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">General Discussion</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Ask anything about campus life — no topic is off-limits.</p>
+          <span class="thread-count-badge">🧵 24 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">🛠️</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">Technical Help</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Get help with coding, lab work, assignments and projects.</p>
+          <span class="thread-count-badge">🧵 41 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">🏫</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">Campus Life</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Talk about hostels, cafeteria, facilities and more.</p>
+          <span class="thread-count-badge">🧵 18 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">🎉</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">Events &amp; Clubs</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Discuss upcoming events, fests, and club activities.</p>
+          <span class="thread-count-badge">🧵 33 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">📚</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">Study Groups</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Find study partners and form groups for exams.</p>
+          <span class="thread-count-badge">🧵 15 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+          <span class="category-icon">🎲</span>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-primary);">Off-Topic</h3>
+          <p style="font-size:13px;color:var(--text-secondary);flex:1;">Memes, games, random thoughts — just for fun!</p>
+          <span class="thread-count-badge">🧵 9 threads</span>
+          <a href="#" class="card-link">Browse →</a>
+        </div>
+
+      </div>
+
+      <!-- Recent Threads -->
+      <div class="section-header">
+        <h2 class="section-title">Recent Threads</h2>
+        <a href="#" class="section-link">View all →</a>
+      </div>
+
+      <div id="threadList">
+
+        <!-- Thread 1 -->
+        <div class="announcement-list-card">
+          <div class="alc-body">
+            <span class="tag tag-tech">Technical Help</span>
+            <h3>How to join the Tech Club?</h3>
+            <div class="meta">
+              <span>👤 Arjun Sharma</span>
+              <span>🕒 Sep 27, 2026</span>
+            </div>
+            <p>I'm a first-year student and really interested in joining the Tech Club. What's the registration process and are there any prerequisites?</p>
+          </div>
+          <div class="thread-reply-count">💬 12 replies</div>
+          <div class="alc-action">
+            <a href="#">View Thread →</a>
+          </div>
+        </div>
+
+        <!-- Thread 2 -->
+        <div class="announcement-list-card">
+          <div class="alc-body">
+            <span class="tag tag-tech">Technical Help</span>
+            <h3>Hackathon team formation — anyone interested?</h3>
+            <div class="meta">
+              <span>👤 Priya Nair</span>
+              <span>🕒 Sep 26, 2026</span>
+            </div>
+            <p>Looking for 2–3 teammates for the upcoming National Level Hackathon. Must know at least one of: React, Python, or ML basics.</p>
+          </div>
+          <div class="thread-reply-count">💬 28 replies</div>
+          <div class="alc-action">
+            <a href="#">View Thread →</a>
+          </div>
+        </div>
+
+        <!-- Thread 3 -->
+        <div class="announcement-list-card">
+          <div class="alc-body">
+            <span class="tag tag-general">Campus Life</span>
+            <h3>Library timings during exams</h3>
+            <div class="meta">
+              <span>👤 Rohan Mehta</span>
+              <span>🕒 Sep 25, 2026</span>
+            </div>
+            <p>Does the library stay open 24×7 during exam week? Last semester they extended it — any update for this sem?</p>
+          </div>
+          <div class="thread-reply-count">💬 7 replies</div>
+          <div class="alc-action">
+            <a href="#">View Thread →</a>
+          </div>
+        </div>
+
+        <!-- Thread 4 -->
+        <div class="announcement-list-card">
+          <div class="alc-body">
+            <span class="tag tag-culture">Events &amp; Clubs</span>
+            <h3>Cultural fest volunteers needed</h3>
+            <div class="meta">
+              <span>👤 Sneha Iyer</span>
+              <span>🕒 Sep 24, 2026</span>
+            </div>
+            <p>We need enthusiastic volunteers for Culturama 2026. Sign up for backstage, decoration, registration desk, and more!</p>
+          </div>
+          <div class="thread-reply-count">💬 19 replies</div>
+          <div class="alc-action">
+            <a href="#">View Thread →</a>
+          </div>
+        </div>
+
+        <!-- Thread 5 -->
+        <div class="announcement-list-card">
+          <div class="alc-body">
+            <span class="tag tag-purple">Study Groups</span>
+            <h3>Best resources for DSA preparation</h3>
+            <div class="meta">
+              <span>👤 Karan Verma</span>
+              <span>🕒 Sep 23, 2026</span>
+            </div>
+            <p>Compiling a list of the best books, YouTube channels and websites for Data Structures and Algorithms. Share your favourites!</p>
+          </div>
+          <div class="thread-reply-count">💬 34 replies</div>
+          <div class="alc-action">
+            <a href="#">View Thread →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Start a Discussion -->
+      <div class="start-btn-row">
+        <button class="btn-primary" onclick="toggleNewThread()">✏️ Start a Discussion</button>
+        <p>Have something to say? Open a new thread for the community.</p>
+      </div>
+
+      <!-- New Thread Form (hidden by default) -->
+      <div id="newThreadForm" style="display:none;">
+        <div class="new-thread-form">
+          <h3>✏️ New Thread</h3>
+
+          <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Category</label>
+          <select id="threadCategory">
+            <option value="">— Select a category —</option>
+            <option value="General Discussion">General Discussion</option>
+            <option value="Technical Help">Technical Help</option>
+            <option value="Campus Life">Campus Life</option>
+            <option value="Events & Clubs">Events &amp; Clubs</option>
+            <option value="Study Groups">Study Groups</option>
+            <option value="Off-Topic">Off-Topic</option>
+          </select>
+
+          <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Thread Title</label>
+          <input type="text" id="threadTitle" placeholder="Enter a descriptive title..." />
+
+          <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Content</label>
+          <textarea id="threadContent" placeholder="Describe your question or topic in detail..."></textarea>
+
+          <div style="display:flex;gap:12px;">
+            <button class="btn-primary" onclick="submitThread()">🚀 Post Thread</button>
+            <button class="btn-secondary" onclick="toggleNewThread()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-wrapper -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Toggle new thread form
+    function toggleNewThread() {
+      const form = document.getElementById('newThreadForm');
+      if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        form.style.display = 'none';
+      }
+    }
+
+    // Tag map for dynamic cards
+    const tagMap = {
+      'General Discussion': 'tag-general',
+      'Technical Help':     'tag-tech',
+      'Campus Life':        'tag-general',
+      'Events & Clubs':     'tag-culture',
+      'Study Groups':       'tag-purple',
+      'Off-Topic':          'tag-sports'
+    };
+
+    // Submit new thread (dynamic inject)
+    function submitThread() {
+      const category = document.getElementById('threadCategory').value.trim();
+      const title    = document.getElementById('threadTitle').value.trim();
+      const content  = document.getElementById('threadContent').value.trim();
+
+      if (!category || !title || !content) {
+        alert('Please fill in all fields before posting.');
+        return;
+      }
+
+      const tagClass = tagMap[category] || 'tag-general';
+      const today    = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+
+      const card = document.createElement('div');
+      card.className = 'announcement-list-card';
+      card.innerHTML = `
+        <div class="alc-body">
+          <span class="tag ${tagClass}">${category}</span>
+          <h3>${title}</h3>
+          <div class="meta">
+            <span>👤 You</span>
+            <span>🕒 ${today}</span>
+          </div>
+          <p>${content}</p>
+        </div>
+        <div class="thread-reply-count">💬 0 replies</div>
+        <div class="alc-action"><a href="#">View Thread →</a></div>
+      `;
+
+      const list = document.getElementById('threadList');
+      list.insertBefore(card, list.firstChild);
+
+      // Reset form
+      document.getElementById('threadCategory').value = '';
+      document.getElementById('threadTitle').value    = '';
+      document.getElementById('threadContent').value  = '';
+      document.getElementById('newThreadForm').style.display = 'none';
+
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

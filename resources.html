@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources — Campus Community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .resource-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .resource-card:hover {
+      border-color: var(--border-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), var(--cyan-glow-sm);
+    }
+
+    .resource-card:hover::before { opacity: 1; }
+
+    .resource-file-icon {
+      font-size: 44px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .resource-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .resource-card .res-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .resource-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, var(--cyan), #0099cc);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: 'Poppins', sans-serif;
+      box-shadow: var(--cyan-glow-sm);
+      text-decoration: none;
+      align-self: flex-start;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--cyan-glow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html" class="active"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="page-wrapper">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="neon-title">📂 Resources</h1>
+        <p>Download notes, previous papers, project templates and tutorials shared by students and faculty.</p>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="notes">Notes</button>
+        <button class="filter-btn" data-filter="papers">Previous Papers</button>
+        <button class="filter-btn" data-filter="projects">Projects</button>
+        <button class="filter-btn" data-filter="tutorials">Tutorials</button>
+      </div>
+
+      <!-- Resource Cards Grid -->
+      <div class="grid-3" id="resourceGrid">
+
+        <!-- Resource 1: Notes -->
+        <div class="resource-card" data-tag="notes">
+          <span class="resource-file-icon">📄</span>
+          <span class="tag tag-tech">Notes · PDF</span>
+          <h3>Data Structures Notes — Unit 1</h3>
+          <div class="res-meta">
+            <span>👤 Prof. A. Kumar</span>
+            <span>📅 Sep 10, 2026</span>
+          </div>
+          <p>Comprehensive notes covering Arrays, Linked Lists, Stacks and Queues with diagrams and examples.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+        <!-- Resource 2: Notes -->
+        <div class="resource-card" data-tag="notes">
+          <span class="resource-file-icon">📄</span>
+          <span class="tag tag-tech">Notes · PDF</span>
+          <h3>Web Development Basics</h3>
+          <div class="res-meta">
+            <span>👤 Sneha Iyer</span>
+            <span>📅 Sep 14, 2026</span>
+          </div>
+          <p>Beginner-friendly notes on HTML5, CSS3, and vanilla JavaScript — perfect for revision before labs.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+        <!-- Resource 3: Previous Papers -->
+        <div class="resource-card" data-tag="papers">
+          <span class="resource-file-icon">📊</span>
+          <span class="tag tag-general">Previous Paper · PDF</span>
+          <h3>OS End-Sem Exam 2025</h3>
+          <div class="res-meta">
+            <span>👤 Rohan Mehta</span>
+            <span>📅 Aug 28, 2026</span>
+          </div>
+          <p>Full question paper from the Operating Systems end-semester exam of 2025 with solution hints.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+        <!-- Resource 4: Previous Papers -->
+        <div class="resource-card" data-tag="papers">
+          <span class="resource-file-icon">📊</span>
+          <span class="tag tag-general">Previous Paper · PDF</span>
+          <h3>DBMS Mid-Term 2025</h3>
+          <div class="res-meta">
+            <span>👤 Priya Nair</span>
+            <span>📅 Sep 2, 2026</span>
+          </div>
+          <p>DBMS mid-term paper covering Normalization, SQL queries, ER diagrams and relational algebra.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+        <!-- Resource 5: Project -->
+        <div class="resource-card" data-tag="projects">
+          <span class="resource-file-icon">🗂️</span>
+          <span class="tag tag-purple">Project · ZIP</span>
+          <h3>Mini Project Report Template</h3>
+          <div class="res-meta">
+            <span>👤 Dept. of CS</span>
+            <span>📅 Sep 18, 2026</span>
+          </div>
+          <p>Official mini project report template with cover page, abstract, chapters, and references pre-formatted in DOCX + PDF.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+        <!-- Resource 6: Tutorial -->
+        <div class="resource-card" data-tag="tutorials">
+          <span class="resource-file-icon">📄</span>
+          <span class="tag tag-tech">Tutorial · PDF</span>
+          <h3>SQL Cheat Sheet</h3>
+          <div class="res-meta">
+            <span>👤 Karan Verma</span>
+            <span>📅 Sep 20, 2026</span>
+          </div>
+          <p>A one-page quick reference covering all essential SQL commands — DDL, DML, joins, subqueries, and aggregate functions.</p>
+          <a href="#" class="btn-download">⬇️ Download</a>
+        </div>
+
+      </div><!-- /grid-3 -->
+
+    </div><!-- /page-wrapper -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Filter logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const resourceCards = document.querySelectorAll('#resourceGrid .resource-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        resourceCards.forEach(card => {
+          if (filter === 'all' || card.dataset.tag === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

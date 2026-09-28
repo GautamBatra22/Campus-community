@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clubs — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <span>Campus</span>
+        <span>Community</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <h1 class="neon-title">👥 Campus Clubs</h1>
+      <p>Find your community. Join a club and be part of something bigger.</p>
+    </div>
+
+    <div class="grid-3">
+
+      <div class="club-card">
+        <span class="club-icon">💻</span>
+        <span class="tag tag-tech">Technical</span>
+        <h3>Technical Club</h3>
+        <p>Coding competitions, hackathons, open-source projects and technical workshops. If you love technology — this is your home.</p>
+        <span class="club-members">👤 120 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+      <div class="club-card">
+        <span class="club-icon">🎭</span>
+        <span class="tag tag-culture">Cultural</span>
+        <h3>Cultural Club</h3>
+        <p>Music, dance, drama and festivals. Express your creative side and perform on the biggest stages on campus.</p>
+        <span class="club-members">👤 95 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+      <div class="club-card">
+        <span class="club-icon">⚽</span>
+        <span class="tag tag-sports">Sports</span>
+        <h3>Sports Club</h3>
+        <p>Cricket, football, basketball, athletics and inter-college tournaments. Stay fit and compete at the highest level.</p>
+        <span class="club-members">👤 80 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+      <div class="club-card">
+        <span class="club-icon">📸</span>
+        <span class="tag tag-purple">Photography</span>
+        <h3>Photography Club</h3>
+        <p>Capture campus life through your lens. Workshops, photo walks and exhibitions await passionate photographers.</p>
+        <span class="club-members">👤 45 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+      <div class="club-card">
+        <span class="club-icon">📚</span>
+        <span class="tag tag-general">Literary</span>
+        <h3>Literary Club</h3>
+        <p>Book discussions, debates, poetry slams and writing competitions. For those who love the power of words.</p>
+        <span class="club-members">👤 60 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+      <div class="club-card">
+        <span class="club-icon">🌱</span>
+        <span class="tag tag-sports">Environment</span>
+        <h3>Eco Club</h3>
+        <p>Campus green drives, sustainability projects and nature treks. Be the change for a better tomorrow.</p>
+        <span class="club-members">👤 38 members</span>
+        <a href="#" class="card-link">View Club →</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

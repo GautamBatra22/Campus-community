@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Users | Campus Community Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .users-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    table.users-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table.users-table thead tr { background: #0d0d2b; }
+    table.users-table th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    table.users-table td {
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    table.users-table tbody tr:hover td { background: var(--bg-card-hover); }
+    table.users-table tbody tr:last-child td { border-bottom: none; }
+    table.users-table tbody tr { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+    .user-name {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .user-email { color: var(--text-muted); }
+
+    .actions-cell { display: flex; gap: 8px; align-items: center; }
+    .btn-role {
+      background: var(--bg-input);
+      border: 1px solid var(--border-cyan);
+      color: var(--cyan);
+      padding: 5px 11px;
+      font-size: 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-role:hover { background: var(--cyan-dim); }
+    .btn-remove {
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #ef4444;
+      padding: 5px 11px;
+      font-size: 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-remove:hover { background: rgba(239,68,68,0.22); }
+
+    .search-bar-wrap { margin-bottom: 20px; }
+    .search-bar-wrap input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .user-count {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .user-count span { color: var(--cyan); font-weight: 600; }
+
+    .tag-admin {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(0,212,255,0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,255,0.25);
+    }
+    .tag-student {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(148,163,184,0.10);
+      color: var(--text-secondary);
+      border: 1px solid rgba(148,163,184,0.2);
+    }
+    .section-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Admin</div>
+    <ul class="nav-links">
+      <li><a href="admin-announcements.html"><span class="nav-icon">📢</span><span class="nav-label">Manage Announcements</span></a></li>
+      <li><a href="admin-events.html"><span class="nav-icon">📅</span><span class="nav-label">Manage Events</span></a></li>
+      <li><a href="admin-clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Manage Clubs</span></a></li>
+      <li class="active"><a href="admin-users.html"><span class="nav-icon">👤</span><span class="nav-label">Manage Users</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Logout</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Dashboard</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1 class="neon-title">Admin Panel</h1>
+    </div>
+
+    <div class="welcome-banner">
+      <div>
+        <h2 style="margin:0 0 4px;font-size:22px;font-weight:700;">👤 Manage Users</h2>
+        <p style="margin:0;color:var(--text-secondary);font-size:14px;">View, search, and manage all registered users.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="dashboard-card" style="padding:28px;">
+        <div class="section-heading">🗂️ All Users</div>
+
+        <!-- Search Bar -->
+        <div class="search-bar-wrap">
+          <div class="form-group" style="margin-bottom:0;">
+            <input type="text" id="userSearch" placeholder="Search by name or email..." oninput="filterUsers()" />
+          </div>
+        </div>
+
+        <!-- User Count -->
+        <div class="user-count">Showing <span id="visibleCount">8</span> of 8 users</div>
+
+        <!-- Table -->
+        <div class="users-table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+
+              <tr data-name="arjun sharma" data-email="arjun@college.edu" data-id="1">
+                <td>1</td>
+                <td class="user-name">Arjun Sharma</td>
+                <td class="user-email">arjun@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 1, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 1)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 1)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="priya patel" data-email="priya@college.edu" data-id="2">
+                <td>2</td>
+                <td class="user-name">Priya Patel</td>
+                <td class="user-email">priya@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 1, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 2)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 2)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="rahul verma" data-email="rahul@college.edu" data-id="3">
+                <td>3</td>
+                <td class="user-name">Rahul Verma</td>
+                <td class="user-email">rahul@college.edu</td>
+                <td><span class="tag-admin">Admin</span></td>
+                <td>Aug 20, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 3)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 3)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="sneha gupta" data-email="sneha@college.edu" data-id="4">
+                <td>4</td>
+                <td class="user-name">Sneha Gupta</td>
+                <td class="user-email">sneha@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 2, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 4)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 4)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="amit kumar" data-email="amit@college.edu" data-id="5">
+                <td>5</td>
+                <td class="user-name">Amit Kumar</td>
+                <td class="user-email">amit@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 3, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 5)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 5)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="divya singh" data-email="divya@college.edu" data-id="6">
+                <td>6</td>
+                <td class="user-name">Divya Singh</td>
+                <td class="user-email">divya@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 1, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 6)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 6)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="karan mehta" data-email="karan@college.edu" data-id="7">
+                <td>7</td>
+                <td class="user-name">Karan Mehta</td>
+                <td class="user-email">karan@college.edu</td>
+                <td><span class="tag-admin">Admin</span></td>
+                <td>Aug 15, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 7)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 7)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr data-name="pooja nair" data-email="pooja@college.edu" data-id="8">
+                <td>8</td>
+                <td class="user-name">Pooja Nair</td>
+                <td class="user-email">pooja@college.edu</td>
+                <td><span class="tag-student">Student</span></td>
+                <td>Sep 5, 2026</td>
+                <td>
+                  <div class="actions-cell">
+                    <button class="btn-role" onclick="changeRole(this, 8)">Change Role</button>
+                    <button class="btn-remove" onclick="removeUser(this, 8)">Remove</button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <footer><p>&copy; 2026 <span style="color:var(--cyan)">Campus Community</span>. All rights reserved.</p></footer>
+  </main>
+</div>
+
+<script src="main.js"></script>
+  <script src="auth.js"></script>
+<script>
+  const API_BASE = 'http://localhost:3000/api';
+  const API = {
+    async request(url, options={}) {
+      const token = localStorage.getItem('token');
+      const res = await fetch(API_BASE + url, {
+        headers: { 'Content-Type': 'application/json', ...(token ? {'Authorization':'Bearer '+token} : {}), ...options.headers },
+        ...options
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    },
+    createAnnouncement: (d) => API.request('/announcements', {method:'POST', body:JSON.stringify(d)}),
+    deleteAnnouncement: (id) => API.request('/announcements/'+id, {method:'DELETE'}),
+    createEvent: (d) => API.request('/events', {method:'POST', body:JSON.stringify(d)}),
+    deleteEvent: (id) => API.request('/events/'+id, {method:'DELETE'}),
+    createClub: (d) => API.request('/clubs', {method:'POST', body:JSON.stringify(d)}),
+    deleteClub: (id) => API.request('/clubs/'+id, {method:'DELETE'}),
+    getUsers: () => API.request('/users'),
+    updateUserRole: (id, role) => API.request('/users/'+id+'/role', {method:'PATCH', body:JSON.stringify({role})}),
+    deleteUser: (id) => API.request('/users/'+id, {method:'DELETE'}),
+  };
+
+  const TOTAL_USERS = 8;
+
+  function filterUsers() {
+    const query = document.getElementById('userSearch').value.toLowerCase().trim();
+    const rows  = document.querySelectorAll('#userTableBody tr');
+    let visible = 0;
+
+    rows.forEach(row => {
+      const name  = row.dataset.name  || '';
+      const email = row.dataset.email || '';
+      const match = name.includes(query) || email.includes(query);
+      row.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    document.getElementById('visibleCount').textContent = visible;
+  }
+
+  function changeRole(btn, id) {
+    const row      = btn.closest('tr');
+    const roleCell = row.querySelector('td:nth-child(4)');
+    const badge    = roleCell.querySelector('span');
+    const isAdmin  = badge.classList.contains('tag-admin');
+    const newRole  = isAdmin ? 'Student' : 'Admin';
+
+    if (!confirm(`Change this user's role to ${newRole}?`)) return;
+
+    badge.className  = isAdmin ? 'tag-student' : 'tag-admin';
+    badge.textContent = newRole;
+
+    API.updateUserRole(id, newRole.toLowerCase()).catch(() => {/* backend not live yet */});
+  }
+
+  function removeUser(btn, id) {
+    if (!confirm('Are you sure you want to remove this user?')) return;
+    const row = btn.closest('tr');
+    row.style.opacity   = '0';
+    row.style.transform = 'translateX(30px)';
+    setTimeout(() => {
+      row.remove();
+      // Recount visible after removal
+      const remaining = document.querySelectorAll('#userTableBody tr:not([style*="display: none"])').length;
+      document.getElementById('visibleCount').textContent = remaining;
+    }, 300);
+    API.deleteUser(id).catch(() => {/* backend not live yet */});
+  }
+</script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Schedule — Campus Community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- Timetable ---- */
+    .timetable-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+    }
+
+    .timetable {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .timetable th {
+      background: #0d0d2b;
+      color: var(--cyan);
+      padding: 14px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    .timetable td {
+      padding: 12px 10px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+      vertical-align: top;
+      text-align: center;
+    }
+
+    /* Time column */
+    .timetable td.time-col {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 12px;
+      min-width: 90px;
+      white-space: nowrap;
+      background: #0d0d2b;
+    }
+
+    /* Subject cells */
+    .timetable td.subject {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .subject-name {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .subject-loc {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Lab cells */
+    .timetable td.lab {
+      background: rgba(168, 85, 247, 0.08);
+      border-color: rgba(168, 85, 247, 0.2);
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    /* Lunch row */
+    .timetable td.lunch {
+      text-align: center;
+      color: var(--orange);
+      font-weight: 600;
+      background: rgba(249, 115, 22, 0.06);
+      border-color: rgba(249, 115, 22, 0.15);
+      letter-spacing: 0.5px;
+    }
+
+    /* Empty cells */
+    .timetable td.empty {
+      background: transparent;
+    }
+
+    /* Add Class Form */
+    .add-class-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 20px;
+      box-shadow: var(--cyan-glow-sm);
+    }
+
+    .add-class-form h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .form-field select,
+    .form-field input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .form-field select:focus,
+    .form-field input:focus {
+      border-color: var(--border-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .form-field select option {
+      background: var(--bg-card);
+    }
+
+    .form-field input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html" class="active"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="page-wrapper">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="neon-title">🗓️ My Schedule</h1>
+        <p>Your weekly class timetable at a glance.</p>
+      </div>
+
+      <!-- Legend -->
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--bg-card-hover);border:1px solid var(--border-cyan);"></div>
+          Regular Class
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);"></div>
+          Lab Session
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);"></div>
+          Lunch Break
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:transparent;border:1px solid var(--border);"></div>
+          Free Period
+        </div>
+      </div>
+
+      <!-- Timetable -->
+      <div class="timetable-wrapper">
+        <table class="timetable" id="timetable">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- 9:00 – 10:00 -->
+            <tr>
+              <td class="time-col">9:00 – 10:00</td>
+              <td class="subject">
+                <span class="subject-name">Mathematics</span>
+                <span class="subject-loc">📍 Room 101</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Data Structures</span>
+                <span class="subject-loc">📍 Room 202</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Mathematics</span>
+                <span class="subject-loc">📍 Room 101</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Physics</span>
+                <span class="subject-loc">📍 Room 103</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Web Technology</span>
+                <span class="subject-loc">📍 Room 301</span>
+              </td>
+            </tr>
+
+            <!-- 10:00 – 11:00 -->
+            <tr>
+              <td class="time-col">10:00 – 11:00</td>
+              <td class="subject">
+                <span class="subject-name">Physics</span>
+                <span class="subject-loc">📍 Room 103</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Operating Systems</span>
+                <span class="subject-loc">📍 Room 204</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Computer Science</span>
+                <span class="subject-loc">📍 Room 205</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Data Structures</span>
+                <span class="subject-loc">📍 Room 202</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">DBMS</span>
+                <span class="subject-loc">📍 Room 303</span>
+              </td>
+            </tr>
+
+            <!-- 11:00 – 12:00 -->
+            <tr>
+              <td class="time-col">11:00 – 12:00</td>
+              <td class="subject">
+                <span class="subject-name">Computer Science</span>
+                <span class="subject-loc">📍 Room 205</span>
+              </td>
+              <td class="empty"></td>
+              <td class="lab">
+                🖥️ CS Lab<br>
+                <span style="font-size:11px;color:var(--text-muted);font-weight:400;">Lab Block A</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Web Technology</span>
+                <span class="subject-loc">📍 Room 301</span>
+              </td>
+              <td class="empty"></td>
+            </tr>
+
+            <!-- 12:00 – 1:00 Lunch -->
+            <tr>
+              <td class="time-col">12:00 – 1:00</td>
+              <td class="lunch" colspan="5">🍽️ &nbsp; LUNCH BREAK</td>
+            </tr>
+
+            <!-- 1:00 – 2:00 -->
+            <tr>
+              <td class="time-col">1:00 – 2:00</td>
+              <td class="subject">
+                <span class="subject-name">DBMS</span>
+                <span class="subject-loc">📍 Room 303</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Mathematics</span>
+                <span class="subject-loc">📍 Room 101</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Operating Systems</span>
+                <span class="subject-loc">📍 Room 204</span>
+              </td>
+              <td class="lab">
+                🖥️ DS Lab<br>
+                <span style="font-size:11px;color:var(--text-muted);font-weight:400;">Lab Block B</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Physics</span>
+                <span class="subject-loc">📍 Room 103</span>
+              </td>
+            </tr>
+
+            <!-- 2:00 – 3:00 -->
+            <tr>
+              <td class="time-col">2:00 – 3:00</td>
+              <td class="empty"></td>
+              <td class="subject">
+                <span class="subject-name">Web Technology</span>
+                <span class="subject-loc">📍 Room 301</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">DBMS</span>
+                <span class="subject-loc">📍 Room 303</span>
+              </td>
+              <td class="lab">
+                🖥️ DS Lab (cont.)<br>
+                <span style="font-size:11px;color:var(--text-muted);font-weight:400;">Lab Block B</span>
+              </td>
+              <td class="empty"></td>
+            </tr>
+
+            <!-- 3:00 – 4:00 -->
+            <tr>
+              <td class="time-col">3:00 – 4:00</td>
+              <td class="lab">
+                🖥️ Physics Lab<br>
+                <span style="font-size:11px;color:var(--text-muted);font-weight:400;">Lab Block C</span>
+              </td>
+              <td class="subject">
+                <span class="subject-name">Computer Science</span>
+                <span class="subject-loc">📍 Room 205</span>
+              </td>
+              <td class="empty"></td>
+              <td class="empty"></td>
+              <td class="subject">
+                <span class="subject-name">Operating Systems</span>
+                <span class="subject-loc">📍 Room 204</span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add Class Button -->
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:4px;">
+        <button class="btn-secondary" onclick="toggleAddForm()">➕ Add Class</button>
+        <span style="font-size:13px;color:var(--text-secondary);">Customise your timetable with additional sessions.</span>
+      </div>
+
+      <!-- Add Class Form (hidden) -->
+      <div id="addClassForm" style="display:none;">
+        <div class="add-class-form">
+          <h3>➕ Add New Class</h3>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label>Day</label>
+              <select id="classDay">
+                <option value="">— Select Day —</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Time Slot</label>
+              <select id="classTime">
+                <option value="">— Select Time Slot —</option>
+                <option>9:00 – 10:00</option>
+                <option>10:00 – 11:00</option>
+                <option>11:00 – 12:00</option>
+                <option>1:00 – 2:00</option>
+                <option>2:00 – 3:00</option>
+                <option>3:00 – 4:00</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Subject</label>
+              <input type="text" id="classSubject" placeholder="e.g. Compiler Design" />
+            </div>
+            <div class="form-field">
+              <label>Location</label>
+              <input type="text" id="classLocation" placeholder="e.g. Room 401" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-primary" onclick="addClass()">✅ Add to Timetable</button>
+            <button class="btn-secondary" onclick="toggleAddForm()">Cancel</button>
+          </div>
+
+          <p id="addClassMsg" style="margin-top:12px;font-size:13px;color:var(--cyan);display:none;"></p>
+        </div>
+      </div>
+
+    </div><!-- /page-wrapper -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    function toggleAddForm() {
+      const form = document.getElementById('addClassForm');
+      if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        form.style.display = 'none';
+      }
+    }
+
+    const dayIndex = { Monday:1, Tuesday:2, Wednesday:3, Thursday:4, Friday:5 };
+    const timeSlots = ['9:00 – 10:00','10:00 – 11:00','11:00 – 12:00','1:00 – 2:00','2:00 – 3:00','3:00 – 4:00'];
+
+    function addClass() {
+      const day      = document.getElementById('classDay').value;
+      const timeSlot = document.getElementById('classTime').value;
+      const subject  = document.getElementById('classSubject').value.trim();
+      const location = document.getElementById('classLocation').value.trim();
+      const msgEl    = document.getElementById('addClassMsg');
+
+      if (!day || !timeSlot || !subject || !location) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const table  = document.getElementById('timetable');
+      const rows   = table.querySelectorAll('tbody tr');
+      const slotIdx = timeSlots.indexOf(timeSlot);
+
+      // Account for lunch row at index 3
+      let rowIdx = slotIdx;
+      if (slotIdx >= 3) rowIdx = slotIdx + 1; // skip lunch row
+
+      const targetRow = rows[rowIdx];
+      if (!targetRow) { alert('Could not find that time slot.'); return; }
+
+      const colIdx = dayIndex[day];
+      const targetCell = targetRow.cells[colIdx];
+
+      if (!targetCell) { alert('Could not locate that cell.'); return; }
+
+      targetCell.className = 'subject';
+      targetCell.innerHTML = `
+        <span class="subject-name">${subject}</span>
+        <span class="subject-loc">📍 ${location}</span>
+      `;
+
+      // Reset
+      document.getElementById('classDay').value     = '';
+      document.getElementById('classTime').value    = '';
+      document.getElementById('classSubject').value  = '';
+      document.getElementById('classLocation').value = '';
+
+      msgEl.textContent = `✅ "${subject}" added to ${day} at ${timeSlot}.`;
+      msgEl.style.display = 'block';
+      setTimeout(() => { msgEl.style.display = 'none'; }, 3000);
+    }
+  </script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

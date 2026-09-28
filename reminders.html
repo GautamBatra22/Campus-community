@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Reminders — Campus Community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .add-reminder-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--cyan-glow-sm);
+    }
+
+    .add-reminder-form h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .add-reminder-form input,
+    .add-reminder-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 14px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .add-reminder-form input:focus,
+    .add-reminder-form textarea:focus {
+      border-color: var(--border-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .add-reminder-form input::placeholder,
+    .add-reminder-form textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .add-reminder-form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Reminder card styles */
+    .reminder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .reminder-card:hover {
+      border-color: var(--border-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), var(--cyan-glow-sm);
+    }
+
+    .reminder-bell {
+      font-size: 36px;
+      display: block;
+    }
+
+    .reminder-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .reminder-datetime {
+      font-size: 13px;
+      color: var(--cyan);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reminder-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .btn-delete {
+      padding: 6px 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      transition: all var(--transition);
+      align-self: flex-start;
+    }
+
+    .btn-delete:hover {
+      background: rgba(239, 68, 68, 0.28);
+      border-color: rgba(239, 68, 68, 0.55);
+      transform: scale(1.02);
+    }
+
+    .sync-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+    <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html" class="active"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="page-wrapper">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="neon-title">📌 My Reminders</h1>
+        <p>Never miss a deadline, meeting, or event again.</p>
+      </div>
+
+      <!-- Sync Note -->
+      <div class="sync-note">
+        ℹ️ Reminders are saved locally. Will sync with your account once logged in.
+      </div>
+
+      <!-- Add Reminder Form -->
+      <div class="add-reminder-form">
+        <h2>➕ Add Reminder</h2>
+        <div class="form-row">
+          <div>
+            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Title <span style="color:#ef4444;">*</span></label>
+            <input type="text" id="reminderTitle" placeholder="e.g. Submit Assignment" />
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Date &amp; Time <span style="color:#ef4444;">*</span></label>
+            <input type="datetime-local" id="reminderDateTime" />
+          </div>
+        </div>
+        <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px;">Description <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+        <textarea id="reminderDesc" placeholder="Any extra details..."></textarea>
+        <button class="btn-primary" onclick="addReminder()">📌 Add Reminder</button>
+      </div>
+
+      <!-- Reminders Grid -->
+      <div class="section-header">
+        <h2 class="section-title">Your Reminders</h2>
+        <span id="reminderCount" style="font-size:13px;color:var(--text-muted);">3 reminders</span>
+      </div>
+
+      <div class="grid-2" id="reminderGrid">
+
+        <!-- Sample Reminder 1 -->
+        <div class="reminder-card">
+          <span class="reminder-bell">🔔</span>
+          <h3>Submit DSA Assignment</h3>
+          <div class="reminder-datetime">🗓️ Oct 5, 2026 &nbsp;·&nbsp; 11:59 PM</div>
+          <p class="reminder-desc">Submit Unit 1 and Unit 2 solutions on the faculty portal before midnight.</p>
+          <button class="btn-delete" onclick="deleteReminder(this)">🗑️ Delete</button>
+        </div>
+
+        <!-- Sample Reminder 2 -->
+        <div class="reminder-card">
+          <span class="reminder-bell">🔔</span>
+          <h3>Tech Club Meeting</h3>
+          <div class="reminder-datetime">🗓️ Oct 3, 2026 &nbsp;·&nbsp; 4:00 PM</div>
+          <p class="reminder-desc">Weekly Tech Club meeting in Lab 3 — bring your project updates.</p>
+          <button class="btn-delete" onclick="deleteReminder(this)">🗑️ Delete</button>
+        </div>
+
+        <!-- Sample Reminder 3 -->
+        <div class="reminder-card">
+          <span class="reminder-bell">🔔</span>
+          <h3>Hackathon Registration Deadline</h3>
+          <div class="reminder-datetime">🗓️ Sep 30, 2026 &nbsp;·&nbsp; 5:00 PM</div>
+          <p class="reminder-desc">Last date to register for the National Level Hackathon. Team of 2–4 required.</p>
+          <button class="btn-delete" onclick="deleteReminder(this)">🗑️ Delete</button>
+        </div>
+
+      </div><!-- /grid-2 -->
+
+    </div><!-- /page-wrapper -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    function updateCount() {
+      const cards = document.querySelectorAll('#reminderGrid .reminder-card');
+      const countEl = document.getElementById('reminderCount');
+      countEl.textContent = `${cards.length} reminder${cards.length !== 1 ? 's' : ''}`;
+    }
+
+    function addReminder() {
+      const title    = document.getElementById('reminderTitle').value.trim();
+      const dtInput  = document.getElementById('reminderDateTime').value;
+      const desc     = document.getElementById('reminderDesc').value.trim();
+
+      if (!title) { alert('Please enter a reminder title.'); return; }
+      if (!dtInput) { alert('Please select a date and time.'); return; }
+
+      // Format datetime nicely
+      const dt = new Date(dtInput);
+      const dateStr = dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const timeStr = dt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+      const grid = document.getElementById('reminderGrid');
+
+      // Remove empty state if present
+      const emptyState = grid.querySelector('.empty-state');
+      if (emptyState) emptyState.remove();
+
+      const card = document.createElement('div');
+      card.className = 'reminder-card';
+      card.innerHTML = `
+        <span class="reminder-bell">🔔</span>
+        <h3>${title}</h3>
+        <div class="reminder-datetime">🗓️ ${dateStr} &nbsp;·&nbsp; ${timeStr}</div>
+        <p class="reminder-desc">${desc || 'No additional details.'}</p>
+        <button class="btn-delete" onclick="deleteReminder(this)">🗑️ Delete</button>
+      `;
+
+      grid.insertBefore(card, grid.firstChild);
+
+      // Reset form
+      document.getElementById('reminderTitle').value    = '';
+      document.getElementById('reminderDateTime').value = '';
+      document.getElementById('reminderDesc').value     = '';
+
+      updateCount();
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function deleteReminder(btn) {
+      const card = btn.closest('.reminder-card');
+      card.style.transition = 'all 0.3s ease';
+      card.style.opacity    = '0';
+      card.style.transform  = 'scale(0.9)';
+      setTimeout(() => {
+        card.remove();
+        const grid = document.getElementById('reminderGrid');
+        if (grid.children.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-state">
+              <span class="empty-icon">📭</span>
+              No reminders yet. Add one above!
+            </div>`;
+        }
+        updateCount();
+      }, 300);
+    }
+  </script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>

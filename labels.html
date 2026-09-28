@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Labels — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text"><span>Campus</span><span>Community</span></div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main Menu</div>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+        <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+        <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+        <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+        <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+        <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+      </ul>
+
+      <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+      <ul class="nav-links">
+        <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+        <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+      </ul>
+
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">◀ <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div>
+        <h1 class="neon-title">🏷️ My Labels</h1>
+        <p>Organise announcements, events and resources into your personal labels.</p>
+      </div>
+      <button class="btn-primary" onclick="showCreateForm()" style="flex-shrink:0;margin-top:4px;">+ New Label</button>
+    </div>
+
+    <!-- Create Label inline form (hidden by default) -->
+    <div id="createLabelForm" style="display:none; background:var(--bg-card); border:1px solid var(--border-cyan); border-radius:var(--radius); padding:24px; margin-bottom:28px;">
+      <h3 style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:16px;">Create New Label</h3>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+        <input id="createLabelName" class="popup-label-input" style="max-width:260px;font-size:14px;padding:10px 14px;" placeholder="Label name (e.g. C Programming)">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:12px;color:var(--text-muted);font-weight:600;">Color:</span>
+          <div id="createColorPicker" style="display:flex;gap:6px;"></div>
+        </div>
+        <button class="btn-primary" onclick="createLabelFromPage()" style="padding:10px 20px;">Create</button>
+        <button class="btn-secondary" onclick="hideCreateForm()" style="padding:10px 20px;">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Label Detail View (when ?id= is present) -->
+    <div id="labelDetailView" style="display:none;">
+      <div class="label-detail-header">
+        <button onclick="showAllLabels()" class="btn-secondary" style="padding:8px 16px;font-size:13px;">← All Labels</button>
+        <div class="label-detail-dot" id="detailDot"></div>
+        <h2 id="detailTitle" style="font-size:22px;font-weight:700;"></h2>
+        <span id="detailCount" style="font-size:13px;color:var(--text-muted);"></span>
+      </div>
+      <div id="detailItems" class="grid-3"></div>
+      <div id="detailEmpty" style="display:none;" class="empty-labels-state">
+        <span class="big-icon">📭</span>
+        <h3>This label is empty</h3>
+        <p>Go to Announcements, Events or Resources and tap 🏷️ to add items here.</p>
+      </div>
+    </div>
+
+    <!-- All Labels Grid -->
+    <div id="allLabelsView">
+      <div id="labelsGrid" class="labels-page-grid"></div>
+      <div id="emptyState" class="empty-labels-state" style="display:none;">
+        <span class="big-icon">🏷️</span>
+        <h3>No labels yet</h3>
+        <p>Create your first label to start organising content!</p>
+        <button class="btn-primary" onclick="showCreateForm()" style="margin-top:20px;">+ Create Label</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="labels.js"></script>
+  <script>
+    const COLORS = ['#00d4ff','#a855f7','#22c55e','#f97316','#ec4899','#eab308','#3b82f6','#ef4444'];
+    let selectedCreateColor = COLORS[0];
+
+    // Build color picker for create form
+    const picker = document.getElementById('createColorPicker');
+    COLORS.forEach((c, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'color-dot-pick' + (i === 0 ? ' selected' : '');
+      dot.style.background = c;
+      dot.onclick = () => {
+        selectedCreateColor = c;
+        document.querySelectorAll('#createColorPicker .color-dot-pick').forEach(d => d.classList.remove('selected'));
+        dot.classList.add('selected');
+      };
+      picker.appendChild(dot);
+    });
+
+    function showCreateForm() {
+      document.getElementById('createLabelForm').style.display = 'block';
+      document.getElementById('createLabelName').focus();
+    }
+    function hideCreateForm() {
+      document.getElementById('createLabelForm').style.display = 'none';
+      document.getElementById('createLabelName').value = '';
+    }
+
+    function createLabelFromPage() {
+      const name = document.getElementById('createLabelName').value.trim();
+      if (!name) { document.getElementById('createLabelName').focus(); return; }
+      LabelsManager.create(name, selectedCreateColor);
+      hideCreateForm();
+      renderPage();
+    }
+
+    function deleteLabel(id) {
+      if (!confirm('Delete this label? Items inside will not be deleted.')) return;
+      LabelsManager.delete(id);
+      renderPage();
+    }
+
+    function openLabel(id) {
+      const labels = LabelsManager.getAll();
+      const label = labels.find(l => l.id === id);
+      if (!label) return;
+
+      document.getElementById('allLabelsView').style.display = 'none';
+      document.getElementById('labelDetailView').style.display = 'block';
+      document.getElementById('detailDot').style.background = label.color;
+      document.getElementById('detailTitle').textContent = label.name;
+      document.getElementById('detailCount').textContent = label.items.length + ' item' + (label.items.length !== 1 ? 's' : '');
+
+      const grid = document.getElementById('detailItems');
+      const empty = document.getElementById('detailEmpty');
+      grid.innerHTML = '';
+
+      if (label.items.length === 0) {
+        grid.style.display = 'none';
+        empty.style.display = 'block';
+      } else {
+        grid.style.display = 'grid';
+        empty.style.display = 'none';
+        label.items.forEach(item => {
+          const typeIcons = { announcement: '📢', event: '📅', resource: '📂', club: '👥' };
+          const typeColors = { announcement: 'tag-tech', event: 'tag-sports', resource: 'tag-general', club: 'tag-culture' };
+          const card = document.createElement('div');
+          card.className = 'announcement-card';
+          card.innerHTML = `
+            <div class="card-top-row">
+              <span class="tag ${typeColors[item.type] || 'tag-general'}">${typeIcons[item.type] || '📌'} ${item.type}</span>
+              <button class="label-btn has-label" title="Remove from this label" onclick="removeFromThisLabel('${label.id}', '${item.type}', '${item.itemId}')">🏷️</button>
+            </div>
+            <h3>${item.title}</h3>
+            <p style="font-size:13px;color:var(--text-muted);">Saved to <strong style="color:var(--cyan);">${label.name}</strong></p>`;
+          grid.appendChild(card);
+        });
+      }
+
+      // update URL without reload
+      history.replaceState(null, '', 'labels.html?id=' + id);
+    }
+
+    function removeFromThisLabel(labelId, type, itemId) {
+      LabelsManager.removeItem(labelId, type, itemId);
+      const urlId = new URLSearchParams(window.location.search).get('id');
+      if (urlId) openLabel(urlId);
+    }
+
+    function showAllLabels() {
+      document.getElementById('allLabelsView').style.display = 'block';
+      document.getElementById('labelDetailView').style.display = 'none';
+      history.replaceState(null, '', 'labels.html');
+      renderPage();
+    }
+
+    function renderPage() {
+      const labels = LabelsManager.getAll();
+      const grid = document.getElementById('labelsGrid');
+      const empty = document.getElementById('emptyState');
+      grid.innerHTML = '';
+
+      if (labels.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      labels.forEach(label => {
+        const previewItems = label.items.slice(0, 3);
+        const typeIcons = { announcement: '📢', event: '📅', resource: '📂', club: '👥' };
+        const previews = previewItems.map(i =>
+          `<div class="label-item-preview">
+            <span class="label-item-type">${typeIcons[i.type] || '📌'}</span>
+            <span style="overflow:hidden;text-overflow:ellipsis;">${i.title}</span>
+          </div>`
+        ).join('') || '<p style="font-size:12px;color:var(--text-muted);padding:4px 0;">No items yet</p>';
+
+        const card = document.createElement('div');
+        card.className = 'label-card';
+        card.innerHTML = `
+          <div class="label-card-header">
+            <div class="label-card-title">
+              <span class="label-dot" style="background:${label.color};"></span>
+              ${label.name}
+              <span class="label-count-badge">${label.items.length}</span>
+            </div>
+            <div class="label-card-actions">
+              <button class="label-action-btn del" title="Delete label" onclick="event.stopPropagation();deleteLabel('${label.id}')">🗑️</button>
+            </div>
+          </div>
+          <div class="label-card-body">${previews}</div>`;
+        card.addEventListener('click', () => openLabel(label.id));
+        grid.appendChild(card);
+      });
+    }
+
+    // On page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlId = new URLSearchParams(window.location.search).get('id');
+      if (urlId) {
+        openLabel(urlId);
+      } else {
+        renderPage();
+      }
+    });
+  </script>
+</body>
+</html>

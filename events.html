@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events — Campus Community</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎓</div>
+      <div class="brand-text">
+        <span>Campus</span>
+        <span>Community</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+    <ul class="nav-links">
+      <li><a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a></li>
+      <li><a href="announcement.html"><span class="nav-icon">📢</span><span class="nav-label">Announcements</span></a></li>
+      <li><a href="clubs.html"><span class="nav-icon">👥</span><span class="nav-label">Clubs</span></a></li>
+      <li><a href="events.html"><span class="nav-icon">📅</span><span class="nav-label">Events</span></a></li>
+      <li><a href="discussion.html"><span class="nav-icon">💬</span><span class="nav-label">Discussions</span></a></li>
+      <li><a href="resources.html"><span class="nav-icon">📂</span><span class="nav-label">Resources</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">My Space</div>
+    <ul class="nav-links">
+      <li><a href="reminders.html"><span class="nav-icon">📌</span><span class="nav-label">Reminders</span></a></li>
+      <li><a href="schedule.html"><span class="nav-icon">🗓️</span><span class="nav-label">Schedule</span></a></li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:12px;">Account</div>
+    <ul class="nav-links">
+      <li><a href="login.html"><span class="nav-icon">🔐</span><span class="nav-label">Login</span></a></li>
+      <li><a href="student-dashboard.html"><span class="nav-icon">🎓</span><span class="nav-label">Student Dashboard</span></a></li>
+      <li><a href="admin-dashboard.html"><span class="nav-icon">⚙️</span><span class="nav-label">Admin Panel</span></a></li>
+    </ul>
+  
+      <div class="nav-section-label" style="margin-top:12px;">My Labels</div>
+      <ul class="nav-links" id="sidebarLabels"></ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="account.html" class="sidebar-account-btn">
+        <div class="account-avatar-sm">S</div>
+        <span class="nav-label sidebar-account-label">My Account</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">&#9664; <span class="toggle-label">Collapse</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <h1 class="neon-title">📅 Upcoming Events</h1>
+      <p>Don't miss what's happening on campus this month.</p>
+    </div>
+
+    <div class="grid-3">
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">30</div>
+          <div class="date-info"><span>September</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-tech">Technical</span>
+          <h3>Campus Hackathon</h3>
+          <p>24-hour hackathon for all students. Form teams of 2–4, pick a challenge and build fast.</p>
+          <div class="event-detail">📍 CS Block — Lab 3</div>
+          <div class="event-detail">⏰ 9:00 AM onwards</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Register →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">5</div>
+          <div class="date-info"><span>October</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-sports">Sports</span>
+          <h3>Inter-College Cricket Tournament</h3>
+          <p>Cheer for our college team as they battle it out in the inter-college cricket championship.</p>
+          <div class="event-detail">📍 College Ground</div>
+          <div class="event-detail">⏰ 8:00 AM onwards</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">10</div>
+          <div class="date-info"><span>October</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-culture">Cultural</span>
+          <h3>Annual Cultural Fest</h3>
+          <p>The biggest event of the year! Music, dance, drama and much more. A night to remember.</p>
+          <div class="event-detail">📍 Main Auditorium</div>
+          <div class="event-detail">⏰ 5:00 PM onwards</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Get Tickets →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">14</div>
+          <div class="date-info"><span>October</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-tech">Technical</span>
+          <h3>Web Dev Workshop</h3>
+          <p>Hands-on workshop on HTML, CSS and JavaScript for beginners. Conducted by senior students.</p>
+          <div class="event-detail">📍 CS Block — Seminar Hall</div>
+          <div class="event-detail">⏰ 10:00 AM — 1:00 PM</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Register →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">20</div>
+          <div class="date-info"><span>October</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-general">General</span>
+          <h3>Career Fair 2026</h3>
+          <p>Top companies visiting campus for placement. Bring your resume and be interview-ready!</p>
+          <div class="event-detail">📍 College Grounds</div>
+          <div class="event-detail">⏰ 9:00 AM — 5:00 PM</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-band">
+          <div class="date-day">25</div>
+          <div class="date-info"><span>October</span><span>2026</span></div>
+        </div>
+        <div class="event-body">
+          <span class="tag tag-purple">Photography</span>
+          <h3>Campus Photo Walk</h3>
+          <p>Explore the campus through your camera lens. A fun walk organised by the Photography Club.</p>
+          <div class="event-detail">📍 Main Gate (Meet Here)</div>
+          <div class="event-detail">⏰ 6:00 AM — 9:00 AM</div>
+          <a href="#" class="card-link" style="margin-top:4px;">Join →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Campus Community</span>. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="labels.js"></script>
+  <script src="api.js"></script>
+</body>
+</html>
